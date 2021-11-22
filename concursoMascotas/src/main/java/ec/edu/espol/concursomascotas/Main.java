@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 package ec.edu.espol.concursomascotas;
+import ec.edu.espol.model.Evaluacion;
+import ec.edu.espol.model.Inscripcion;
+import ec.edu.espol.model.MiembroJurado;
+import ec.edu.espol.model.Criterio;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -50,11 +56,42 @@ public class Main {
             case 6: //Incripción
                 break;
             case 7: //MiembroJurado
+                MiembroJurado miembroJurado = MiembroJurado.nextMiembroJurado(sc);
+                miembroJurado.saveFile("miembroJurados.txt");
                 break;
-            default: //Evaliacion
+            default: //Evaluacion
+                String emailJurado;
+                int idInscripcion;
+                int criterioEvaluar;
+                double notaEvaluacion;
+                do {
+                    System.out.println("Ingrese su mail de jurado");
+                    emailJurado = sc.nextLine();
+                } while();
+                recepcionDatos(emailJurado, idInscripcion, criterioEvaluar, notaEvaluacion);
                 break;
         }
         
     }
     
+    // Adicionales
+    public static Evaluacion recepcionDatos(String emailJurado, int idInscripcion, int criterioEvaluar, double notaEvaluacion) {
+        //
+        // Diseñada para el case "Evaluacion"
+        //
+        ArrayList<MiembroJurado> miembrosJurado = MiembroJurado.readFile("miembroJurados.txt");
+        ArrayList<Inscripcion> inscripciones = Inscripcion.readFile("inscripciones.txt");
+        ArrayList<Criterio> criterios = Criterio.readFile("criterios.txt"); //Criterio no se encuentra inicilizada aún 
+        int id = 0;
+        MiembroJurado miembroJuradoFiltrado = null;
+        Inscripcion inscripcionFiltrada = null;
+        Criterio criterioFiltrado = null;
+        
+        for (MiembroJurado mj : miembrosJurado) if ( Objects.equals(emailJurado, mj.getEmail()) ) miembroJuradoFiltrado = mj;
+        for (Inscripcion i : inscripciones) if (idInscripcion == i.getId()) inscripcionFiltrada = i;
+        for (Criterio c : criterios) if(criterioEvaluar == c.getId()) criterioFiltrado = c;
+        
+        return new Evaluacion(id, idInscripcion, inscripcionFiltrada, miembroJuradoFiltrado.getId(), miembroJuradoFiltrado, notaEvaluacion, criterioEvaluar, criterioFiltrado);
+        
+    }
 }
