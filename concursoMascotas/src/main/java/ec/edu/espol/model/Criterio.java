@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author gerar
  */
-class Criterio {
+public class Criterio {
     private int id;
     private String descripcion;
     private ArrayList<Criterio> evaluaciones;
