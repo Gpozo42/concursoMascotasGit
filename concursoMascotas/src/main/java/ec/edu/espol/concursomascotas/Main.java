@@ -26,6 +26,9 @@ public class Main {
         
         Scanner sc = new Scanner(System.in);
         int opcion;
+        ArrayList<MiembroJurado> miembrosJurado = MiembroJurado.readFile("miembroJurados.txt");
+        ArrayList<Inscripcion> inscripciones = Inscripcion.readFile("inscripciones.txt");
+        ArrayList<Criterio> criterios = Criterio.readFile("criterios.txt"); //Criterio no se encuentra inicilizada aún 
         
         // Falta de corregir, hacer uso de isNumeric
         do {
@@ -64,10 +67,18 @@ public class Main {
                 int idInscripcion;
                 int criterioEvaluar;
                 double notaEvaluacion;
+                
                 do {
                     System.out.println("Ingrese su mail de jurado");
                     emailJurado = sc.nextLine();
-                } while();
+                    System.out.println("Ingrese el id de Inscripcion");
+                    idInscripcion = sc.nextInt();
+                    System.out.println("Ingrese el criterio a evaluar");
+                    criterioEvaluar = sc.nextInt();
+                    System.out.println("Ingrese la nota de evaluacion");
+                    notaEvaluacion = sc.nextDouble();
+                } while(validacionDatosEvaluacion(emailJurado, idInscripcion, criterioEvaluar, notaEvaluacion, miembrosJurado, inscripciones, criterios));
+                
                 recepcionDatos(emailJurado, idInscripcion, criterioEvaluar, notaEvaluacion);
                 break;
         }
@@ -75,13 +86,26 @@ public class Main {
     }
     
     // Adicionales
+    public static boolean validacionDatosEvaluacion(String emailJurado, int idInscripcion, int criterioEvaluar, double notaEvaluacion, ArrayList<MiembroJurado> miembrosJurado, ArrayList<Inscripcion> inscripciones, ArrayList<Criterio> criterios) {
+        boolean jurado = false;
+        boolean inscripcion = false;
+        boolean criterio = false;
+        boolean evaluacion = false;
+        
+        for (MiembroJurado mj : miembrosJurado) if ( Objects.equals(emailJurado, mj.getEmail()) ) jurado = true;
+        for (Inscripcion i : inscripciones) if (idInscripcion == i.getId()) inscripcion = true;
+        for (Criterio c : criterios) if(criterioEvaluar == c.getId()) criterio = true;
+        if (notaEvaluacion >= 0) evaluacion = true;
+        return jurado && inscripcion && criterio && evaluacion;
+    }
+    
+    
+    
+    
     public static Evaluacion recepcionDatos(String emailJurado, int idInscripcion, int criterioEvaluar, double notaEvaluacion) {
         //
         // Diseñada para el case "Evaluacion"
         //
-        ArrayList<MiembroJurado> miembrosJurado = MiembroJurado.readFile("miembroJurados.txt");
-        ArrayList<Inscripcion> inscripciones = Inscripcion.readFile("inscripciones.txt");
-        ArrayList<Criterio> criterios = Criterio.readFile("criterios.txt"); //Criterio no se encuentra inicilizada aún 
         int id = 0;
         MiembroJurado miembroJuradoFiltrado = null;
         Inscripcion inscripcionFiltrada = null;
