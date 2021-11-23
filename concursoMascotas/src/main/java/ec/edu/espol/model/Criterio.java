@@ -5,12 +5,46 @@
  */
 package ec.edu.espol.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author gerar
  */
-class Criterio {
-    public Criterio() {
-        
+public class Criterio {
+    private int id;
+    private String descripcion;
+    private ArrayList<Criterio> evaluaciones;
+    private int idConcurso;
+    private Concurso concurso;
+
+    public Criterio(int id, String descripcion, ArrayList<Criterio> evaluaciones, int idConcurso, Concurso concurso) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.evaluaciones = evaluaciones;
+        this.idConcurso = idConcurso;
+        this.concurso = concurso;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public ArrayList<Criterio> getEvaluaciones() {
+        return evaluaciones;
+    }
+
+    public int getIdConcurso() {
+        return idConcurso;
+    }
+
+    public Concurso getConcurso() {
+        return concurso;
+    }
+    
+    
 }
