@@ -128,6 +128,26 @@ public class Concurso {
         return listaConcurso;
     }
     
+        public static Concurso nextConcurso(Scanner sc){//Opcion 3
+        System.out.println("Ingrese el ID de concurso:");
+        int id= sc.nextInt();
+        sc.nextLine();
+        System.out.println("Ingrese el nombre del concurso:");
+        String nombre= sc.nextLine();
+        System.out.println("Ingrese el nombre de la tematica:");
+        String tematica= sc.nextLine();
+        System.out.println("Ingrese el costo por participar:");
+        double coste= sc.nextDouble();
+        System.out.println("Ingrese el costo la fecha del concurso:");
+        String fecha= sc.nextLine();
+        System.out.println("Ingrese el costo la fecha inicial de incripcion:");
+        String fechaI= sc.nextLine();
+        System.out.println("Ingrese el costo la fecha final de inscripcion:");
+        String fechaF= sc.nextLine();
+        Concurso c=new Concurso(id,nombre, tematica, coste, LocalDate.parse(fecha), LocalDate.parse(fechaI), LocalDate.parse(fechaF));
+        return c;
+    }
+    
     public static Concurso anexarNombrePremio(String nombre){//verifica si el id de la clase concurso es igual a idCOcurso
         ArrayList<Concurso> lista=Concurso.readFile("concursos.txt");
         for (Concurso c: lista){

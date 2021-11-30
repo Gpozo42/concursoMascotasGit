@@ -58,6 +58,8 @@ public class Main {
             case 2: //Mascota
                 break;
             case 3: //Concurso
+                Scanner sc3=new Scanner(System.in);
+                (Concurso.nextConcurso(sc3)).saveFile("concursos.txt");
                 break;
             case 4: //Premio
                 System.out.println("Ingrese la cantidad de premios para el concurso:");
@@ -80,8 +82,6 @@ public class Main {
                     Premio p=new Premio(idPremio[i], i+1,descripciones[i],Concurso.anexarIdPremio(nombreConcurso),Concurso.anexarNombrePremio(nombreConcurso));
                     p.saveFile("premios.txt");
                 }
-                
-
                 break;
 
             case 5: //Criterio
