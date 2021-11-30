@@ -60,6 +60,7 @@ public class Main {
             case 3: //Concurso
                 break;
             case 4: //Premio
+              
                 break;
             case 5: //Criterio
                 break;

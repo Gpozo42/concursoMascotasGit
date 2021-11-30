@@ -93,4 +93,20 @@ public class Premio {
         
         return listaPremio;
     }
+    
+    public void opcion4(Scanner sc){
+        System.out.println("Ingrese la cantidad de premios para el concurso:");
+        int cantidad= sc.nextInt();
+        sc.nextLine();
+        int contador=0;
+        String[] descripciones=new String[cantidad];
+        while(contador <cantidad){
+            System.out.println("Ingrese la descripcion del premio "+(contador+1)+":");
+            String descrip=sc.nextLine();
+            descripciones[contador]=descrip;
+        }
+        
+        
+    }
+    
 }
