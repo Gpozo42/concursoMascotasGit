@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Concurso {
     private int id;
     private String nombre;
-    private LocalDate fecha;
+    private LocalDate fecha;//fecha del concurso
     private LocalDate fechaIncripcion;
     private LocalDate fechaCierreInscripcion;
     private String tematica;
@@ -26,10 +26,10 @@ public class Concurso {
     private ArrayList<Premio> premios;
     private ArrayList<Criterio> criterios;
 
-    public Concurso(int id, String nombre, String tematica, double costo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion) {
+    public Concurso(int id, String nombre, String tematica, double costo,LocalDate Fecha ,LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion) {
         this.id = id;
         this.nombre = nombre;
-        this.fecha = LocalDate.now();
+        this.fecha = this.fecha;
         this.fechaIncripcion=fechaInscripcion;
         this.fechaIncripcion = fechaIncripcion;
         this.tematica = tematica;
@@ -85,7 +85,7 @@ public class Concurso {
     }
     //FUNCIONES
     public String toString(){
-        return this.id+"|"+this.nombre+"|"+this.tematica+"|"+this.costo+"|"+this.fechaIncripcion+"|"+this.fechaCierreInscripcion;
+        return this.id+"|"+this.nombre+"|"+this.tematica+"|"+this.costo+"|"+this.fecha+"|"+this.fechaIncripcion+"|"+this.fechaCierreInscripcion;
     }
     
     //funciones para llenar los atributos de lista
@@ -103,7 +103,7 @@ public class Concurso {
     //ARCHIVOS ESCRITURA
     public void saveFile(String archivo){//esta en append 
         try(PrintWriter pw=new PrintWriter(new FileOutputStream(new File(archivo), true))){
-            pw.println(this.id+"|"+this.nombre+"|"+this.tematica+"|"+this.costo+"|"+this.fechaIncripcion+"|"+this.fechaCierreInscripcion);
+            pw.println(this.id+"|"+this.nombre+"|"+this.tematica+"|"+this.costo+"|"+this.fecha+"|"+this.fechaIncripcion+"|"+this.fechaCierreInscripcion);
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -111,14 +111,13 @@ public class Concurso {
     }
  
     //ARCHIVOS LECTURA
-    //para rellenar lista con
     public static ArrayList<Concurso> readFile(String archivo){
         ArrayList<Concurso> listaConcurso=new ArrayList<>();
         try(Scanner sc=new Scanner(new File(archivo))){
            while(sc.hasNextLine()){//mientras exista la sguiente linea
                String linea=sc.nextLine();
                String[] datos=linea.split("|");
-               Concurso c=new Concurso(Integer.parseInt(datos[0]), datos[1], datos[2], Double.parseDouble(datos[3]),LocalDate.parse(datos[4]),LocalDate.parse(datos[5]));//se crea un objeto concurso
+               Concurso c=new Concurso(Integer.parseInt(datos[0]), datos[1], datos[2], Double.parseDouble(datos[3]),LocalDate.parse(datos[4]),LocalDate.parse(datos[5]),LocalDate.parse(datos[6]));//se crea un objeto concurso
                listaConcurso.add(c);
            }
         }
@@ -128,4 +127,20 @@ public class Concurso {
         
         return listaConcurso;
     }
+    
+    public static Concurso anexarNombrePremio(String nombre){//verifica si el id de la clase concurso es igual a idCOcurso
+        ArrayList<Concurso> lista=Concurso.readFile("concursos.txt");
+        for (Concurso c: lista){
+            if(c.nombre.equals(nombre)){
+               return c; 
+               }
+            }
+        
+        return null;
+    } 
+    public static int anexarIdPremio(String nombre){
+        Concurso k=Concurso.anexarNombrePremio(nombre);
+        return k.id;
+    }
+    
 }

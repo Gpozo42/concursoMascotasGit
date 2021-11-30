@@ -83,7 +83,7 @@ public class Premio {
            while(sc.hasNextLine()){//mientras exista la sguiente linea
                String linea=sc.nextLine();
                String[] datos=linea.split("|");
-               Premio p=new Premio(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), datos[2], Integer.parseInt(datos[3]), new Concurso(Integer.parseInt(datos[4]), datos[5], datos[6], Double.parseDouble(datos[7]),LocalDate.parse(datos[8]),LocalDate.parse(datos[9])));//se crea un objeto premio
+               Premio p=new Premio(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), datos[2], Integer.parseInt(datos[3]), null) ;//se crea un objeto premio
                listaPremio.add(p);
            }
         }
@@ -92,21 +92,6 @@ public class Premio {
         }
         
         return listaPremio;
-    }
-    
-    public void opcion4(Scanner sc){
-        System.out.println("Ingrese la cantidad de premios para el concurso:");
-        int cantidad= sc.nextInt();
-        sc.nextLine();
-        int contador=0;
-        String[] descripciones=new String[cantidad];
-        while(contador <cantidad){
-            System.out.println("Ingrese la descripcion del premio "+(contador+1)+":");
-            String descrip=sc.nextLine();
-            descripciones[contador]=descrip;
-        }
-        
-        
     }
     
 }

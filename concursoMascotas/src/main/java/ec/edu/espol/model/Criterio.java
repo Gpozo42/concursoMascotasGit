@@ -22,7 +22,7 @@ public class Criterio {
     private int idConcurso;
     private Concurso concurso;
 
-    public Criterio(int id, String descripcion, int idConcurso, Concurso concurso, ArrayList<Evaluacion> evaluaciones) {
+    public Criterio(int id, String descripcion, int idConcurso, Concurso concurso) {
         this.id = id;
         this.descripcion = descripcion;
         this.evaluaciones = new ArrayList<>();
@@ -63,30 +63,9 @@ public class Criterio {
         this.concurso = concurso;
     }
     
-    //funciones
-    public StringBuilder recorrerEvaluaciones(){
-        StringBuilder sb=new StringBuilder();
-        for (Evaluacion e: this.evaluaciones){
-            sb.append(e);
-            sb.append(",");
-             }
-        sb.delete(sb.length()-1,sb.length()-1);
-        return sb;
-    }
-    
     public void saveFile(String archivo){//esta en modo a(para añadir)
         try(PrintWriter pw=new PrintWriter(new FileOutputStream(new File(archivo), true))){
-            pw.println(this.id+","+this.descripcion+","+","+this.idConcurso+this.concurso+","+this.recorrerEvaluaciones());
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-    public static void saveFile(ArrayList<Criterio> criterios,String archivo){//modo w(sobreescribir)
-        try(PrintWriter pw=new PrintWriter(new FileOutputStream(new File(archivo)))){
-           for(Criterio c: criterios){
-               pw.println(c.id+","+c.descripcion+","+c.idConcurso+","+c.concurso+","+c.recorrerEvaluaciones());
-           }
+            pw.println(this.id+"|"+this.descripcion+"|"+this.idConcurso);
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -99,8 +78,8 @@ public class Criterio {
         try(Scanner sc=new Scanner(new File(archivo))){
            while(sc.hasNextLine()){//mientras exista la sguiente linea
                String linea=sc.nextLine();
-               String[] datos=linea.split(",");
-               Criterio cr=new Criterio(Integer.parseInt(datos[0]),datos[1], Integer.parseInt(datos[2]),);//se crea un objeto criterio
+               String[] datos=linea.split("|");
+               Criterio cr=new Criterio(Integer.parseInt(datos[0]),datos[1], Integer.parseInt(datos[2]), null);//se crea un objeto criterio
                criterios.add(cr);
            }
         }
