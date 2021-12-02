@@ -148,19 +148,21 @@ public class Concurso {
         return c;
     }
     
-    public static Concurso anexarNombrePremio(String nombre){//verifica si el id de la clase concurso es igual a idCOcurso
+    public static Concurso anexarNombrePremio(String nombre){//verifica si el inombre de la clase concurso es igual al enviado
         ArrayList<Concurso> lista=Concurso.readFile("concursos.txt");
-        for (Concurso c: lista){
-            if(c.nombre.equals(nombre)){
-               return c; 
-               }
+        ArrayList<String> nombres=new ArrayList<>();
+        boolean probar=true;
+        Scanner sc=new Scanner(System.in);
+        while(probar){
+            for(Concurso c: lista){
+                if(nombre.equals(c.nombre))
+                    return c;  
             }
-        
+            System.out.println("Ingrese un nombre de concurso ya existente: ");
+            nombre=sc.nextLine();
+        }
         return null;
     } 
-    public static int anexarIdPremio(String nombre){
-        Concurso k=Concurso.anexarNombrePremio(nombre);
-        return k.id;
-    }
+    
     
 }

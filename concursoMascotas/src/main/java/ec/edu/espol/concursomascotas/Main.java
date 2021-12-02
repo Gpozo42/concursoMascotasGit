@@ -62,26 +62,7 @@ public class Main {
                 (Concurso.nextConcurso(sc3)).saveFile("concursos.txt");
                 break;
             case 4: //Premio
-                System.out.println("Ingrese la cantidad de premios para el concurso:");
-                Scanner sc1 = new Scanner(System.in);
-                int cantidad = sc1.nextInt();
-                sc1.nextLine();
-                int sumador = 0;
-                String[] descripciones = new String[cantidad];
-                int[] idPremio = new int[cantidad];
-                while (sumador < cantidad) {
-                    System.out.println("Ingrese la descripcion del premio " + (sumador + 1) + ":");
-                    String descrip = sc1.nextLine();
-                    descripciones[sumador] = descrip;
-                    idPremio[sumador] = sumador + 1;
-                }
-                System.out.println("Ingrese el nombre del concurso: ");
-                Scanner sc2 = new Scanner(System.in);
-                String nombreConcurso = sc2.nextLine();
-                for(int i=0;i<cantidad;i++){
-                    Premio p=new Premio(idPremio[i], i+1,descripciones[i],Concurso.anexarIdPremio(nombreConcurso),Concurso.anexarNombrePremio(nombreConcurso));
-                    p.saveFile("premios.txt");
-                }
+                
                 break;
 
             case 5: //Criterio

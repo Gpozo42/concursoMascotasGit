@@ -8,7 +8,6 @@ package ec.edu.espol.model;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,6 +24,12 @@ public class Premio {
 
     public Premio(int id, int lugar, String descripcion, int idConcurso, Concurso concurso) {
         this.id = id;
+        this.lugar = lugar;
+        this.descripcion = descripcion;
+        this.idConcurso = idConcurso;
+        this.concurso = concurso;
+    }
+    public Premio(int lugar, String descripcion, int idConcurso, Concurso concurso) {
         this.lugar = lugar;
         this.descripcion = descripcion;
         this.idConcurso = idConcurso;
@@ -92,6 +97,33 @@ public class Premio {
         }
         
         return listaPremio;
+    }
+    
+    public void nextPremio(Scanner sc){
+        System.out.println("Ingrese la cantidad de premios para el concurso:");
+                int cantidad = sc.nextInt();
+                sc.nextLine();
+                while(cantidad<=0){
+                    System.out.println("Ingrese un valor mayor a 0 para los premios: ");
+                    cantidad = sc.nextInt();
+                    sc.nextLine();
+                }
+                int sumador = 0;//o contador
+                String[] descripciones = new String[cantidad];
+                int[] idPremio = new int[cantidad];
+                while (sumador < cantidad) {
+                    System.out.println("Ingrese la descripcion del premio " + (sumador + 1) + ":");
+                    String descrip = sc.nextLine();
+                    descripciones[sumador] = descrip;
+                    idPremio[sumador] = sumador + 1;
+                }
+                System.out.println("Ingrese el nombre del concurso: ");
+                String nombreConcurso = sc.nextLine();
+                Concurso valido=Concurso.anexarNombrePremio(nombreConcurso);
+                for(int i=0;i<cantidad;i++){
+                    Premio p=new Premio(i+1,descripciones[i],valido.getId(),valido);
+                    p.saveFile("premios.txt");
+                }
     }
     
 }
