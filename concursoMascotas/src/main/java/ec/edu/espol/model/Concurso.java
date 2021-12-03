@@ -119,19 +119,6 @@ public class Concurso {
         return this.id + "|" + this.nombre + "|" + this.tematica + "|" + this.costo + "|" + this.fecha + "|" + this.fechaIncripcion + "|" + this.fechaCierreInscripcion;
     }
 
-    //funciones para llenar los atributos de lista
-    public void ConcursoPremios() {
-        premios = Premio.readFile("premios.txt");
-    }
-
-    public void ConcursoInscripciones() {
-        inscripciones = Inscripcion.readFile("inscripciones.txt");
-    }
-
-    public void ConcursoCriterios() {
-        criterios = Criterio.readFile("inscripciones.txt");
-    }
-
     //ARCHIVOS ESCRITURA
     public void saveFile(String archivo) {//esta en append 
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(archivo), true))) {
