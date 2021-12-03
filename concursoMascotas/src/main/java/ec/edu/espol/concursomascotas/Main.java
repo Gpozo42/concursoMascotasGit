@@ -59,13 +59,18 @@ public class Main {
                 break;
             case 3: //Concurso
                 Scanner sc3=new Scanner(System.in);
+                sc3.useDelimiter("\n");
                 (Concurso.nextConcurso(sc3)).saveFile("concursos.txt");
                 break;
             case 4: //Premio
-                
+                Scanner sc4=new Scanner(System.in);
+                sc4.useDelimiter("\n");
+                Premio.nextPremio(sc4);
                 break;
-
             case 5: //Criterio
+                Scanner sc5=new Scanner(System.in);
+                sc5.useDelimiter("\n");
+                Criterio.nextCriterio(sc5);
                 break;
             case 6: //Incripción
                 int contador = 0;

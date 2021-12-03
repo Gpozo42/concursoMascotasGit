@@ -108,27 +108,25 @@ public class Premio {
         return listaPremio;
     }
 
-    public void nextPremio(Scanner sc) {
+    public static void nextPremio(Scanner sc) {
         System.out.println("Ingrese la cantidad de premios para el concurso:");
         int cantidad = sc.nextInt();
-        sc.nextLine();
         while (cantidad <= 0) {
             System.out.println("Ingrese un valor mayor a 0 para los premios: ");
             cantidad = sc.nextInt();
-            sc.nextLine();
         }
         int sumador = 0;//o contador
         String[] descripciones = new String[cantidad];
         while (sumador < cantidad) {
             System.out.println("Ingrese la descripcion del premio " + (sumador + 1) + ":");
-            String descrip = sc.nextLine();
+            String descrip = sc.next();
             descripciones[sumador] = descrip;
         }
         System.out.println("Ingrese el nombre del concurso: ");
-        String nombreConcurso = sc.nextLine();
+        String nombreConcurso = sc.next();
         Concurso valido = Concurso.anexarNombre(nombreConcurso);
         for (int i = 0; i < cantidad; i++) {
-            Premio p = new Premio(i + 1, descripciones[i], valido.getId(), valido);
+            Premio p = new Premio((i + 1), descripciones[i], valido.getId(), valido);
             p.saveFile("premios.txt");
         }
     }
