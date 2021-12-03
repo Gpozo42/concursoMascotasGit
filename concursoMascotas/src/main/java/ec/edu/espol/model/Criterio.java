@@ -8,6 +8,7 @@ package ec.edu.espol.model;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,7 +33,7 @@ public class Criterio {
     }
 
     public Criterio(String descripcion, int idConcurso, Concurso concurso) {
-        this.id = Util.nextID("criterios");
+        this.id = Util.nextID("criterios.txt");
         this.descripcion = descripcion;
         this.evaluaciones = new ArrayList<>();
         this.idConcurso = idConcurso;
@@ -83,7 +84,7 @@ public class Criterio {
 
     public void saveFile(String archivo) {//esta en modo a(para añadir)
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(archivo), true))) {
-            pw.println(this.id + "|" + this.descripcion + "|" + this.idConcurso);
+            pw.println(this.id + "|" + this.descripcion + "|" + this.idConcurso+"|" + this.concurso.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -95,8 +96,8 @@ public class Criterio {
         try (Scanner sc = new Scanner(new File(archivo))) {
             while (sc.hasNextLine()) {//mientras exista la sguiente linea
                 String linea = sc.nextLine();
-                String[] datos = linea.split("|");
-                Criterio cr = new Criterio(Integer.parseInt(datos[0]), datos[1], Integer.parseInt(datos[2]), null);//se crea un objeto criterio
+                String[] datos = linea.split("\\|");
+                Criterio cr = new Criterio(Integer.parseInt(datos[0]), datos[1], Integer.parseInt(datos[2]), new Concurso(Integer.parseInt(datos[3]), datos[4], datos[5], Double.parseDouble(datos[6]), LocalDate.parse(datos[7]), LocalDate.parse(datos[8]), LocalDate.parse(datos[9])));//se crea un objeto criterio
                 criterios.add(cr);
             }
         } catch (Exception e) {
@@ -120,13 +121,14 @@ public class Criterio {
             System.out.println("Ingrese la descripcion del criterio " + (sumador + 1) + ":");
             String descrip = sc.next();
             descripciones[sumador] = descrip;
+            sumador++;
         }
         System.out.println("Ingrese el nombre del concurso: ");
         String nombreConcurso = sc.next();
         Concurso valido = Concurso.anexarNombre(nombreConcurso);
         for (int i = 0; i < cantidad; i++) {
             Criterio p = new Criterio(descripciones[i], valido.getId(), valido);
-            p.saveFile("premios.txt");
+            p.saveFile("criterios.txt");
         }
     }
 

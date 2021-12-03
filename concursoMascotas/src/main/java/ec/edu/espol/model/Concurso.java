@@ -134,7 +134,7 @@ public class Concurso {
         try (Scanner sc = new Scanner(new File(archivo))) {
             while (sc.hasNextLine()) {//mientras exista la sguiente linea
                 String linea = sc.nextLine();
-                String[] datos = linea.split("|");
+                String[] datos = linea.split("\\|");
                 Concurso c = new Concurso(Integer.parseInt(datos[0]), datos[1], datos[2], Double.parseDouble(datos[3]), LocalDate.parse(datos[4]), LocalDate.parse(datos[5]), LocalDate.parse(datos[6]));//se crea un objeto concurso
                 listaConcurso.add(c);
             }
@@ -165,19 +165,17 @@ public class Concurso {
 
     public static Concurso anexarNombre(String nombre) {//verifica si el inombre de la clase concurso es igual al enviado por teclado
         ArrayList<Concurso> lista = Concurso.readFile("concursos.txt");
-        boolean probar = true;
-        Scanner sc = new Scanner(System.in);
-        sc.useDelimiter("\n");
-        while (probar) {
+        while (true) {
             for (Concurso c : lista) {
                 if (nombre.equals(c.nombre)) {
                     return c;
                 }
             }
             System.out.println("Ingrese un nombre de concurso ya existente: ");
+            Scanner sc = new Scanner(System.in);
+            sc.useDelimiter("\n");
             nombre = sc.next();
         }
-        return null;
     }
 
 }

@@ -97,7 +97,7 @@ public class Premio {
         try (Scanner sc = new Scanner(new File(archivo))) {
             while (sc.hasNextLine()) {//mientras exista la sguiente linea
                 String linea = sc.nextLine();
-                String[] datos = linea.split("|");
+                String[] datos = linea.split("\\|");
                 Premio p = new Premio(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), datos[2], Integer.parseInt(datos[3]), new Concurso(Integer.parseInt(datos[4]), datos[5], datos[6], Double.parseDouble(datos[7]), LocalDate.parse(datos[8]), LocalDate.parse(datos[9]), LocalDate.parse(datos[10])));//se crea un objeto premio
                 listaPremio.add(p);
             }
@@ -121,6 +121,7 @@ public class Premio {
             System.out.println("Ingrese la descripcion del premio " + (sumador + 1) + ":");
             String descrip = sc.next();
             descripciones[sumador] = descrip;
+            sumador++;
         }
         System.out.println("Ingrese el nombre del concurso: ");
         String nombreConcurso = sc.next();
