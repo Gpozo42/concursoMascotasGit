@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author gerar
+ * @author isaac
  */
 public class Mascota {
         
