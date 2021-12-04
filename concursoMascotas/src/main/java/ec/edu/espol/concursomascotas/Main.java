@@ -56,6 +56,9 @@ public class Main {
             case 1: //Dueño
                 break;
             case 2: //Mascota
+                Scanner sc2=new Scanner(System.in);
+                sc2.useDelimiter("\n");
+                Mascota.nextMascota(sc2);
                 break;
             case 3: //Concurso
                 Scanner sc3=new Scanner(System.in);
