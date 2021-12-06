@@ -75,27 +75,29 @@ public class Inscripcion {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
         
         System.out.println("Cuántas mascotas desea inscribir?");
-        numMascotas = sc.nextInt();
-
-        while (contador < numMascotas) {
-            String nombreMascota;
-            String nombreConcurso;
-            Concurso concursoInscrito = null;
-            Mascota mascotaInscrita = null;
-
-            System.out.println("Ingrese el nombre de su mascota: ");
-            nombreMascota = sc.next();
-            System.out.println("Ingrese el nombre del concurso a inscribirse: ");
-            nombreConcurso = sc.next();
-            
-            for (Concurso c : Concurso.readFile("concursos.txt")) if (Objects.equals(nombreConcurso, c.getNombre())) concursoInscrito = c;
-            for (Mascota m : Mascota.readFile("mascotas.txt")) if (Objects.equals(nombreMascota, m.getNombre())) mascotaInscrita = m;
-            
-            inscripciones.add(new Inscripcion(Util.nextID("inscripciones.txt"), mascotaInscrita.getId(), mascotaInscrita, concursoInscrito.getId(), concursoInscrito, concursoInscrito.getCosto(), 0, new ArrayList<>()));
-            
-            contador++;
-        }
         
+        if (sc.hasNextInt()) {
+            numMascotas = sc.nextInt();
+
+            while (contador < numMascotas) {
+                String nombreMascota;
+                String nombreConcurso;
+                Concurso concursoInscrito = null;
+                Mascota mascotaInscrita = null;
+
+                System.out.println("Ingrese el nombre de su mascota: ");
+                nombreMascota = sc.next();
+                System.out.println("Ingrese el nombre del concurso a inscribirse: ");
+                nombreConcurso = sc.next();
+
+                for (Concurso c : Concurso.readFile("concursos.txt")) if (Objects.equals(nombreConcurso, c.getNombre())) concursoInscrito = c;
+                for (Mascota m : Mascota.readFile("mascotas.txt")) if (Objects.equals(nombreMascota, m.getNombre())) mascotaInscrita = m;
+
+                if (concursoInscrito != null && mascotaInscrita != null) inscripciones.add(new Inscripcion(Util.nextID("inscripciones.txt"), mascotaInscrita.getId(), mascotaInscrita, concursoInscrito.getId(), concursoInscrito, concursoInscrito.getCosto(), 0, new ArrayList<>()));
+
+                contador++;
+            }
+        }
         
         
         return inscripciones;

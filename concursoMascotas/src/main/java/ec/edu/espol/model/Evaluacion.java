@@ -103,60 +103,28 @@ public class Evaluacion {
     
     public static Evaluacion nextEvaluacion(Scanner sc) {
         String emailJurado;
-        int idInscripcion;
-        int criterioEvaluar;
-        double notaEvaluacion;
+        int idInscripcion = 0;
+        int criterioEvaluar = 0;
+        double notaEvaluacion = 0;
         MiembroJurado mjFiltrado = null;
         Inscripcion inscripcionFiltrada = null;
         Criterio criterioFiltrado = null;
         
-        ArrayList<Inscripcion> inscripciones = Inscripcion.readFile("inscripciones.txt");
-        ArrayList<MiembroJurado> miembroJurados = MiembroJurado.readFile("miembroJurados.txt");
-        ArrayList<Criterio> criterios = Criterio.readFile("criterios.txt");
-
-                
         System.out.println("Ingrese su mail de jurado");
         emailJurado = sc.next();
         System.out.println("Ingrese el id de Inscripcion");
-        idInscripcion = sc.nextInt();
+        if (sc.hasNextInt()) idInscripcion = sc.nextInt();
         System.out.println("Ingrese el criterio a evaluar");
-        criterioEvaluar = sc.nextInt();
+        if (sc.hasNextInt()) criterioEvaluar = sc.nextInt();
         System.out.println("Ingrese la nota de evaluacion");
-        notaEvaluacion = sc.nextDouble();
+        if (sc.hasNextDouble()) notaEvaluacion = sc.nextDouble();
         
-        for (MiembroJurado mj : miembroJurados) if (Objects.equals(emailJurado, mj.getEmail())) mjFiltrado = mj;
-        for (Inscripcion i : inscripciones) if (idInscripcion == i.getId()) inscripcionFiltrada = i;
-        for (Criterio c : criterios) if(criterioEvaluar == c.getId()) criterioFiltrado = c;
+        for (MiembroJurado mj : MiembroJurado.readFile("miembroJurados.txt")) if (Objects.equals(emailJurado, mj.getEmail())) mjFiltrado = mj;
+        for (Inscripcion i : Inscripcion.readFile("inscripciones.txt")) if (idInscripcion == i.getId()) inscripcionFiltrada = i;
+        for (Criterio c : Criterio.readFile("criterios.txt")) if(criterioEvaluar == c.getId()) criterioFiltrado = c;
         
-        return new Evaluacion(Util.nextID("evaluaciones.txt"), idInscripcion, inscripcionFiltrada, mjFiltrado.getId(), mjFiltrado, notaEvaluacion, criterioFiltrado.getId(), criterioFiltrado);
-        
-    }
-    
-    public static boolean validacionDatosEvaluacion(String emailJurado, int idInscripcion, int criterioEvaluar, double notaEvaluacion, ArrayList<MiembroJurado> miembrosJurado, ArrayList<Inscripcion> inscripciones, ArrayList<Criterio> criterios) {
-        boolean jurado = false;
-        boolean inscripcion = false;
-        boolean criterio = false;
-        boolean evaluacion = false;
-
-        for (MiembroJurado mj : miembrosJurado) {
-            if (Objects.equals(emailJurado, mj.getEmail())) {
-                jurado = true;
-            }
-        }
-        for (Inscripcion i : inscripciones) {
-            if (idInscripcion == i.getId()) {
-                inscripcion = true;
-            }
-        }
-        for (Criterio c : criterios) {
-            if (criterioEvaluar == c.getId()) {
-                criterio = true;
-            }
-        }
-        if (notaEvaluacion >= 0) {
-            evaluacion = true;
-        }
-        return jurado && inscripcion && criterio && evaluacion;
+        if (mjFiltrado != null && inscripcionFiltrada != null && criterioFiltrado != null) return new Evaluacion(Util.nextID("evaluaciones.txt"), idInscripcion, inscripcionFiltrada, mjFiltrado.getId(), mjFiltrado, notaEvaluacion, criterioFiltrado.getId(), criterioFiltrado);
+        return null;
     }
     
     public void saveFile(String nomFile){

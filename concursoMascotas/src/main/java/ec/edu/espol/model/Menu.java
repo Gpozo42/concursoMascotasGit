@@ -54,7 +54,7 @@ public class Menu {
                 Scanner sc6 = new Scanner(System.in);
                 sc6.useDelimiter("\n");
                 ArrayList<Inscripcion> inscrip = Inscripcion.nextInscripcion(sc6);
-                for (Inscripcion i : inscrip) i.saveFile("incripciones.txt");
+                if (!(inscrip.isEmpty())) for (Inscripcion i : inscrip) i.saveFile("incripciones.txt");
                 sc6.close();
                 break;
             case 7: //MiembroJurado
@@ -68,7 +68,7 @@ public class Menu {
                 Scanner sc8 = new Scanner(System.in);
                 sc8.useDelimiter("\n");
                 Evaluacion evaluacionNueva = Evaluacion.nextEvaluacion(sc8);
-                evaluacionNueva.saveFile("evaluaciones.txt");
+                if (evaluacionNueva != null) evaluacionNueva.saveFile("evaluaciones.txt");
                 sc8.close();
                 break;
         }

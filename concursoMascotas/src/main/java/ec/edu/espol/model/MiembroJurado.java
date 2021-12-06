@@ -59,7 +59,7 @@ public class MiembroJurado extends Persona{
         System.out.println("Indique su perfil profesional: ");
         perfil = sc.nextLine();
         
-        return new MiembroJurado(Util.nextID("miembtroJurados.txt"), nombre, apellido, numTelefono, email, perfil, evaluaciones);
+        return new MiembroJurado(Util.nextID("miembroJurados.txt"), nombre, apellido, numTelefono, email, perfil, evaluaciones);
     }
     
     
