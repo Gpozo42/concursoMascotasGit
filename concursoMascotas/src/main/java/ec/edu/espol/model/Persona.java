@@ -5,7 +5,6 @@
  */
 package ec.edu.espol.model;
 
-import java.util.Objects;
 
 /**
  *
@@ -69,19 +68,7 @@ public class Persona
 
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", telefono=" + telefono + ", email=" + email + '}';
-    }
-    @Override
-    public boolean equals(Object o)
-    {
-        if(o == null)
-            return false;
-        if(o == this)
-            return true;
-        if(o.getClass() != this.getClass())
-            return false;
-        Persona other = (Persona)o;
-        return Objects.equals(this.id, other.id);
+        return this.id + "\\|" + this.nombre + "\\|" + this.apellidos + "\\|" + this.telefono + "\\|" + this.email;
     }
      
 }
