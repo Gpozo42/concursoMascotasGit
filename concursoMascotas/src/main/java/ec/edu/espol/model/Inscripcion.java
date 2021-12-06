@@ -72,11 +72,6 @@ public class Inscripcion {
     public static ArrayList<Inscripcion> nextInscripcion(Scanner sc) {
         int contador = 0;
         int numMascotas = 0;
-        double pagoPorInscripcion = 0;
-        ArrayList<Mascota> mascotas = Mascota.readFile("mascotas.txt");
-        ArrayList<Concurso> concursos = Concurso.readFile("concursos.txt");
-        ArrayList<Mascota> mascotasEnInscripcion = new ArrayList<>();
-        ArrayList<Concurso> concursoAInscribir = new ArrayList<>();
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
         
         System.out.println("Cuántas mascotas desea inscribir?");
@@ -85,22 +80,23 @@ public class Inscripcion {
         while (contador < numMascotas) {
             String nombreMascota;
             String nombreConcurso;
+            Concurso concursoInscrito = null;
+            Mascota mascotaInscrita = null;
 
             System.out.println("Ingrese el nombre de su mascota: ");
             nombreMascota = sc.next();
             System.out.println("Ingrese el nombre del concurso a inscribirse: ");
             nombreConcurso = sc.next();
-
-            if (validacionDatosInscripcion(nombreMascota, nombreConcurso, mascotas, concursos)) {
-                for (Concurso c : concursos) if (Objects.equals(nombreConcurso, c.getNombre())) pagoPorInscripcion += c.getCosto();
-                for (Mascota m : mascotas) if (Objects.equals(nombreMascota, m.getNombre())) mascotasEnInscripcion.add(m);
-            }
+            
+            for (Concurso c : Concurso.readFile("concursos.txt")) if (Objects.equals(nombreConcurso, c.getNombre())) concursoInscrito = c;
+            for (Mascota m : Mascota.readFile("mascotas.txt")) if (Objects.equals(nombreMascota, m.getNombre())) mascotaInscrita = m;
+            
+            inscripciones.add(new Inscripcion(Util.nextID("inscripciones.txt"), mascotaInscrita.getId(), mascotaInscrita, concursoInscrito.getId(), concursoInscrito, concursoInscrito.getCosto(), 0, new ArrayList<>()));
+            
             contador++;
         }
         
-        for (Mascota m : mascotasEnInscripcion) {
-            for (Concurso c : concursoAInscribir) inscripciones.add(new Inscripcion(Util.nextID("inscripciones.txt"), m.getId(), m, c.getId(), c, pagoPorInscripcion, 0, new ArrayList<>()));
-        }
+        
         
         return inscripciones;
     }
@@ -108,7 +104,7 @@ public class Inscripcion {
     // Guardado y lectura de archivos
     public void saveFile(String nomFile){
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(nomFile), true))) { // Modo append
-            pw.println(this.id + "\\|" + this.idMascota + "\\|" + this.idConcurso + "\\|" + this.valor + "\\|" + this.descuento + "\\|" + this.evaluaciones);
+            pw.println(this.toString());
             // No se guardan los objetos Mascota y Concurso, solo sus Ids para encontrarlos al momento de la lectura
         }
         catch (Exception e){
@@ -135,5 +131,10 @@ public class Inscripcion {
         }
         
         return inscripciones;
+    }
+    
+    @Override
+    public String toString() {
+        return this.id + "\\|" + this.idMascota + "\\|" + this.idConcurso + "\\|" + this.valor + "\\|" + this.descuento;
     }
 }
